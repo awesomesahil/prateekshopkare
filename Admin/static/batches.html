@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" ng-app="ShopKare_Backend-master">
+<head>
+  <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Portal</title>
+    
+   <!-- 
+ Angular js Codes     -->
+  <script type="text/javascript" src="http://shopkare.com/Admin/static/js/angular.min.js"></script>
+        <script type="text/javascript" src="http://shopkare.com/Admin/static/js/app.js"></script>
+         <script type="text/javascript" src="http://shopkare.com/Admin/static/js/Controllers/product_controller.js"></script>
+
+	  	
+
+
+    <link href="http://shopkare.com/Admin/static/assets/css/bootstrap.css" rel="stylesheet" />
+    
+    <link href="http://shopkare.com/Admin/static/assets/css/font-awesome.css" rel="stylesheet" />
+    
+    <link href="http://shopkare.com/Admin/static/assets/css/style.css" rel="stylesheet" />
+     
+</head>
+<body ng-controller="AppCTRL">
+    <div id="wrapper">
+        <nav class="navbar navbar-default navbar-cls-top " role="navigation" style="margin-bottom: 0">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a  class="navbar-brand" href="http://shopkare.com/Admin/static/products.html">Admin Portal
+
+                </a>
+            </div>
+
+            <div class="notifications-wrapper">
+<ul class="nav">
+               
+               
+                <li class="dropdown navbar-right">
+                   <a class="dropdown-toggle" data-toggle="dropdown" href="#" >
+                        <i class="fa fa-user-plus"></i>  <i class="fa fa-caret-down"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-user" >
+                        
+                       
+                        <li><a href="#"><i class="fa fa-sign-out"></i> Logout</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            </div>
+        </nav>
+        <!-- /. NAV TOP  -->
+        <nav  class="navbar-default navbar-side" role="navigation">
+            <div class="sidebar-collapse">
+                <ul class="nav" id="main-menu">
+                    <li>
+                        <div class="user-img-div">
+                            <img src="http://shopkare.com/Admin/static/assets/img/user.png" class="img-circle" />
+
+                           
+                        </div>
+
+                    </li>
+                     <li>
+                        <a  href="#"> <center><strong><b>Admin</b> </strong></center></a>
+                    </li>
+                      
+                    <li>
+                        <a href="http://shopkare.com/Admin/static/products.html"><i class="fa fa-sitemap "></i>Products</a>
+                        
+                    </li>
+                    
+                    <li>
+                        <a href="http://shopkare.com/Admin/static/orders.html"><i class="fa fa-bolt "></i>Orders</a>
+                        
+                    </li>
+                   
+                    <li>
+                        <a  href="http://shopkare.com/Admin/static/feedback.html"><i class="fa fa-dashcube "></i>Feedback</a>
+                    </li>
+<li>
+                        <a   href="http://shopkare.com/Admin/static/addcategory.html"><i class="fa fa-bolt "></i>Add Category</a>
+                    </li>
+                   
+				   <li>
+                        <a class="active-menu"   href="http://shopkare.com/Admin/static/batches.html"><i class="fa fa-dashcube "></i>Batches</a>
+                    </li>
+<li>
+                        <a class="active"   href="http://shopkare.com/Admin/static/addDeliveryboy.html"><i class="fa fa-bolt "></i>Add Delievery Boy</a>
+                    </li>
+
+
+
+
+  <li>
+                        <a  ng-show="AdminSuper"  href="http://shopkare.com/Admin/static/superUser.html"><i class="fa fa-bolt "></i>Approve Changes</a>
+                    </li>
+
+
+
+
+
+
+                </ul>
+
+</div>
+
+        </nav>
+
+        <!-- /. SIDEBAR MENU (navbar-side) -->
+        <div id="page-wrapper" class="page-wrapper-cls">
+<form>
+<div class="container">
+<div class="row">
+
+          <div class="col-md-12">
+                        <h1 class="page-head-line">Batches</h1>			
+				<a href="#loginbox"><button type="button" class="btn btn-info">Show Details : </button></a>
+						<br><br>
+	    </div>
+<div  >
+    <div class="form-group">
+	<label for="text">Select Level 1 Category</label> &nbsp;
+	<select class="btn btn-default dropdown-toggle" type="button" ng-model="l1category" ng-init=" l1category='-1'" ng-change="selectLevel1Category()">  
+	<option value="-1">Select Level1 Category </option>
+	<option value="{{category}}" ng-repeat="category in categories">{{category._id}} </option>
+	</select>
+      </div>
+    <div class="form-group">
+	<label for="text">Select Main Category</label> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	<select class="btn btn-default dropdown-toggle" ng-model="mainCategory" ng-init="mainCategory='-1'" type="button" ng-change="selectmainCategory()">  
+	<option value="-1">Select Level1 Category First</option>
+	<option value="{{$index}}" ng-repeat="maincategory in mainCategories">{{maincategory}}</option>
+	</select>
+    </div>
+    <div class="form-group">
+	<label for="text">Select Sub Category</label> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	<select class="btn btn-default dropdown-toggle" type="button" ng-init="subcategoryindex='-1'" ng-model="subcategoryindex" ng-change="selectsubcategories()">  
+	<option value="-1">Select Main Level Category First </option>
+	<option value="{{$index}}" ng-repeat="subcategory in subcategories">{{subcategory}}</option>
+	</select>
+	</div>
+    <div class="form-group">
+	<label for="text">Select Product</label>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	<select class="btn btn-default dropdown-toggle" type="button" ng-init="productindex='-1'" ng-model="productindex" ng-change="selectproducts()">  
+	<option value="-1">Select Sub Category First </option>
+	<option value="{{$index}}" ng-repeat="product in products track by $index">{{product.product_name}}</option>
+	</select>
+	</div>
+    
+<br>
+<button value="submit" name="submit" ng-click="getBatches()"> Show Batches </button>
+</div>
+<br>
+</div>
+</div>
+{{removeReply}}
+</form>
+  <br>
+   <table class="table table-hover table-bordered" >
+    <thead>
+      <tr>
+        <th>Store Id</th>
+        <th>Date Of Purchase</th>
+	<th>Date of Expiry</th>
+		<th>Quantity</th>
+		<th>Total Cost Price</th>
+		<th>Total Selling Price</th>
+		<th>Remove Batch</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="batch in Batches">
+        <td>{{batch.StoreId}}</td>
+        <td>{{batch}}</td>
+	<td>{{batch.DateOfExpiry}}</td>
+        <td>{{batch.Quantity.type}}: Rs {{batch.Quantity.value}}</td>
+        <td>{{batch.Cost_Price}}</td>
+        <td>{{batch.Selling_Price}}</td>
+        <td><button type="button" class="btn btn-primary" ng-click="RemoveBatch($index)">Remove Batch</button></td>
+      </tr>
+    </tbody>
+  </table>
+ <br>
+		   		
+<div class="container" >    
+
+        <div id="loginbox"  class="mainbox col-md-6  col-sm-8 ">                    
+            <div class="panel panel-info" >
+                    <div class="panel-heading">
+                        <div class="panel-title">Add Batch</div>
+                        <div style="float:right; font-size: 80%; position: relative; top:-10px">(Add If Any)</div>
+                    </div>     
+
+                    <div style="padding-top:30px" class="panel-body" >
+
+                        <div style="display:none" id="login-alert" class="alert alert-danger col-sm-12"></div>
+                       					<div class="alert alert-danger register-alert hidden" role="alert"></div>
+
+  
+  <div>
+  
+<div class="form-group">
+        <label for="text">Store</label> &nbsp;
+          <select class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" ng-model="Batch_data.StoreId">  
+           <span class="caret"></span>
+         <ul class="dropdown-menu">
+            <li class="dropdown-submenu">
+            <option value="" >Select Store</option>
+            </li>
+            <li class="dropdown-submenu">
+            <option value="store_1" >Store 1</option>
+            </li>
+            <li class="dropdown-submenu">
+            <option value="store_2" >Store 2</option> 
+            </li>
+              </ul>
+      </select>
+    </div>
+ <div class="form-group">
+    <label for="date">Date Of Purchase</label>
+    <input type="text" class="form-control" ng-model="Batch_data.DateOfPurchase" placeholder="Enter date of purchase" >
+    </div>
+    <label for="date">Date Of Expiry</label>
+    <input type="text" name="name" class="form-control" ng-model="Batch_data.DateOfExpiry" id$
+    </div>
+<div id="Add_New">
+     <label for="qno">Quantity</label><br>
+          <select class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" ng-model="Batch_data.Quantity.type">  
+           <span class="caret"></span>
+         <ul class="dropdown-menu">
+            <li class="dropdown-submenu">
+            <option value="{{qty}}" ng-repeat="qty in qtyBatchUse" >{{qty}}</option> 
+            </li>
+              </ul>
+      </select>
+     
+     
+	    <input type="number" name="quantity" ng-model="Batch_data.Quantity.value" id="quantity" placeholder="Number of units."></div>
+      <br>
+		  <div class="form-group">
+		    <label for="cp">Cost Price (Rs)</label>
+		    <input type="number" name="cp" class="form-control" id="cp" ng-model="Batch_data.Cost_Price" placeholder="Enter cost price" >
+		  </div>
+		  <div class="form-group">
+		    <label for="sp">Selling Price  (Rs)</label>
+		    <input type="number" name="sp" class="form-control" id="sp" ng-model="Batch_data.Selling_Price" placeholder="Enter selling price" >
+		 
+		  <br>
+	<button type="button" class="btn btn-primary" ng-click="post_batch_data()">Submit</button>
+		  <br>
+{{BatchReply}}<br>
+			</div>  
+			</div>
+		   
+		   </div>
+                </div>
+                         
+            <!-- /. PAGE INNER  -->
+        </div>
+        <!-- /. PAGE WRAPPER  -->
+    </div>
+    <!-- /. WRAPPER  -->
+    <footer >
+          <b> &copy; Admin Portal | By : Creative Mammoth  </b>
+    </footer>  
+    <!-- /. FOOTER  -->
+    <!-- SCRIPTS -AT THE BOTOM TO REDUCE THE LOAD TIME-->
+    <!-- JQUERY SCRIPTS -->
+    <script src="http://shopkare.com/Admin/static/assets/js/jquery-1.11.1.js"></script>
+    <!-- BOOTSTRAP SCRIPTS -->
+    <script src="http://shopkare.com/Admin/static/assets/js/bootstrap.js"></script>
+    <!-- METISMENU SCRIPTS -->
+    <script src="http://shopkare.com/Admin/static/assets/js/jquery.metisMenu.js"></script>
+    <!-- CUSTOM SCRIPTS -->
+    <script src="http://shopkare.com/Admin/static/assets/js/custom.js"></script>
+<script type="text/javascript">
+
+/*
+function load_more_options () {
+
+  var container = document.getElementById("Add_New");
+   var input = document.createElement("input");
+   input.type = "text";
+   input.placeholder="Add Quantity Type";
+   input.name = "";
+   var input1 = document.createElement("input");
+   input1.type = "value";
+   input1.name = "";
+   input1.placeholder="Add Quantity Value";
+   container.appendChild(input);
+   container.appendChild(input1);
+   container.appendChild(document.createElement("br"))
+                
+}
+*/
+</script>
+
+</body>
+</html>
+http://shopkare.com/
